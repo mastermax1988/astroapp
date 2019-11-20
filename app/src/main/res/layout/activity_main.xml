@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="18dp"
+        android:onClick="btnMoonClick"
         android:text="@string/btnEarthMoon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
