@@ -25,6 +25,7 @@ public class SynodicActivity extends AppCompatActivity {
         Paint paint = null;
         double alpha = 0;
         double beta = 0;
+        double gamma=0;
         Boolean bRun = false;
         List<Float> xHist;
         List<Float> yHist;
@@ -60,8 +61,9 @@ public class SynodicActivity extends AppCompatActivity {
             int y = getHeight();
 
             if(bRun) {
-                alpha += 0.0094;
-                beta += 0.005;
+                alpha -= 0.0094;
+                beta -= 0.005;
+                gamma -= 0.005;
             }
 
             int xs=x/2;
@@ -70,11 +72,13 @@ public class SynodicActivity extends AppCompatActivity {
             int rE=250;
             int rM=(int)(1.5*rE);
 
+
             float xe=(float)(xs+Math.cos(alpha)*rE);
             float ye=(float)(ys+Math.sin(alpha)*rE);
 
             float xm=(float)(xs+Math.cos(beta)*rM);
             float ym=(float)(ys+Math.sin(beta)*rM);
+
 
 
 
@@ -87,8 +91,9 @@ public class SynodicActivity extends AppCompatActivity {
             canvas.drawCircle(xs, ys, iRadSun, paint);
             paint.setColor(Color.parseColor("#0000ff"));
             canvas.drawCircle(xe, ye, iRadEarth, paint);
-            paint.setColor(Color.parseColor("#101010"));
+            paint.setColor(Color.parseColor("#ff0000"));
             canvas.drawCircle(xm, ym, iRadMars, paint);
+
 
 
         }

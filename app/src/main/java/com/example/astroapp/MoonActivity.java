@@ -71,8 +71,8 @@ ImageView earth;
             int iRES = 350;
             int iREM = 75;
             if(bRun) {
-                alpha += 0.005;
-                beta += 0.065;
+                alpha -= 0.005;
+                beta -= 0.065;
             }
             int xs=x/2;
             int ys=y/2;

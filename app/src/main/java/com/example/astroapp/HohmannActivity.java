@@ -24,11 +24,16 @@ public class HohmannActivity extends AppCompatActivity {
     public class MyView extends View {
         Paint paint = null;
         double alpha = 0;
-        double beta = 0;
+        double beta = -0.9;
+        double gamma=0;
         Boolean bRun = true;
-        List<Float> xHist;
-        List<Float> yHist;
-
+        int pcount=0;
+        List<Float> xHistE;
+        List<Float> yHistE;
+        List<Float> xHistM;
+        List<Float> yHistM;
+        List<Float> xHistS;
+        List<Float> yHistS;
         public MyView(Context context) {
             super(context);
             paint = new Paint();
@@ -43,8 +48,13 @@ public class HohmannActivity extends AppCompatActivity {
                     h.postDelayed(this, 20);
                 }
             }, 1000);
-            xHist = new ArrayList<>();
-            yHist = new ArrayList<>();
+            xHistE = new ArrayList<>();
+            yHistE = new ArrayList<>();
+            xHistM = new ArrayList<>();
+            yHistM = new ArrayList<>();
+            xHistS = new ArrayList<>();
+            yHistS = new ArrayList<>();
+
             this.setOnClickListener(this::onCClick);
         }
 
@@ -60,8 +70,9 @@ public class HohmannActivity extends AppCompatActivity {
             int y = getHeight();
 
             if(bRun) {
-                alpha += 0.0094;
-                beta += 0.005;
+                alpha -= 0.0094;
+                beta -= 0.005;
+                gamma -= 0.007;
             }
 
             int xs=x/2;
@@ -69,6 +80,7 @@ public class HohmannActivity extends AppCompatActivity {
 
             int rE=250;
             int rM=(int)(1.5*rE);
+            int rH=(int)(Math.sqrt(1.26*1.26*rE*rE-0.26*rE*0.26*rE)/Math.sqrt(1-0.21*0.21*Math.cos(gamma)*Math.cos(gamma)));
 
             float xe=(float)(xs+Math.cos(alpha)*rE);
             float ye=(float)(ys+Math.sin(alpha)*rE);
@@ -76,7 +88,30 @@ public class HohmannActivity extends AppCompatActivity {
             float xm=(float)(xs+Math.cos(beta)*rM);
             float ym=(float)(ys+Math.sin(beta)*rM);
 
+            float xH=(float)(xs-0.26*rE+Math.cos(gamma)*rH);
+            float yH=(float)(ys+Math.sin(gamma)*rH);
 
+            if(bRun && pcount%10==0)
+            {
+                xHistE.add(xe);
+                yHistE.add(ye);
+                xHistM.add(xm);
+                yHistM.add(ym);
+                xHistS.add(xH);
+                yHistS.add(yH);
+                pcount=0;
+            }
+            if(bRun)
+                pcount++;
+
+            if(xHistE.size()>150) {
+                xHistE.remove(0);
+                yHistE.remove(0);
+                xHistM.remove(0);
+                yHistM.remove(0);
+                xHistS.remove(0);
+                yHistS.remove(0);
+            }
 
             int iRadSun =50, iRadEarth=20, iRadMars=10;
             paint.setStyle(Paint.Style.FILL);
@@ -89,6 +124,15 @@ public class HohmannActivity extends AppCompatActivity {
             canvas.drawCircle(xe, ye, iRadEarth, paint);
             paint.setColor(Color.parseColor("#101010"));
             canvas.drawCircle(xm, ym, iRadMars, paint);
+            paint.setColor(Color.parseColor("#ff00ff"));
+            canvas.drawCircle(xH, yH, iRadMars, paint);
+            paint.setColor(Color.parseColor("#000000"));
+            for(int i=0;i<xHistE.size();i++)
+            {
+                canvas.drawCircle(xHistE.get(i), yHistE.get(i),4,paint);
+                canvas.drawCircle(xHistM.get(i), yHistM.get(i),4,paint);
+                canvas.drawCircle(xHistS.get(i), yHistS.get(i),4,paint);
+            }
 
 
         }
