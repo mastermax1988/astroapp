@@ -19,4 +19,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MoonActivity.class);
         startActivity(intent);
     }
+
+    public void btnHohmannClick(View v)
+    {
+        Intent intent = new Intent(this, HohmannActivity.class);
+        startActivity(intent);
+    }
+
+    public void btnSynodicClick(View v)
+    {
+        Intent intent = new Intent(this, SynodicActivity.class);
+        startActivity(intent);
+    }
 }

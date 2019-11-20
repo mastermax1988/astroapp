@@ -25,8 +25,6 @@ ImageView earth;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new MyView(this));
-
-
     }
 
     public class MyView extends View
@@ -66,6 +64,7 @@ ImageView earth;
         @Override
         protected void onDraw(Canvas canvas)
         {
+
             super.onDraw(canvas);
             int x = getWidth();
             int y = getHeight();
@@ -85,9 +84,10 @@ ImageView earth;
             float xe2=(float)(xs+Math.cos(alpha)*iRES + 15*Math.cos(beta+3.14));
             float ye2=(float)(ys+Math.sin(alpha)*iRES + 15*Math.sin(beta+3.14));
 
-            xHist.add(xe2);
-            yHist.add(ye2);
-
+            if(bRun) {
+                xHist.add(xe2);
+                yHist.add(ye2);
+            }
             if(xHist.size()>1500) {
                 xHist.remove(0);
                 yHist.remove(0);
@@ -107,8 +107,9 @@ ImageView earth;
             canvas.drawCircle(xe2, ye2, iRadEarth, paint);
             paint.setColor(Color.parseColor("#101010"));
             canvas.drawCircle(xm, ym, iRadMood, paint);
-            paint.setColor(Color.parseColor("#ff0000"));
+            paint.setColor(Color.parseColor("#000000"));
             canvas.drawCircle(xe, ye, iRadMood, paint);
+            paint.setColor(Color.parseColor("#ff0000"));
 
             for(int i=0;i<xHist.size();i++)
                 canvas.drawCircle(xHist.get(i), yHist.get(i),iRadMood,paint);
