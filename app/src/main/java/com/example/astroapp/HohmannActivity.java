@@ -26,7 +26,7 @@ public class HohmannActivity extends AppCompatActivity {
         double alpha = 0;
         double beta = -0.9;
         double gamma=0;
-        Boolean bRun = true;
+        Boolean bRun = false;
         int pcount=0;
         List<Float> xHistE;
         List<Float> yHistE;
@@ -122,7 +122,7 @@ public class HohmannActivity extends AppCompatActivity {
             canvas.drawCircle(xs, ys, iRadSun, paint);
             paint.setColor(Color.parseColor("#0000ff"));
             canvas.drawCircle(xe, ye, iRadEarth, paint);
-            paint.setColor(Color.parseColor("#101010"));
+            paint.setColor(Color.parseColor("#ff0000"));
             canvas.drawCircle(xm, ym, iRadMars, paint);
             paint.setColor(Color.parseColor("#ff00ff"));
             canvas.drawCircle(xH, yH, iRadMars, paint);
