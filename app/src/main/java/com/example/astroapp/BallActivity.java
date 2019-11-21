@@ -18,7 +18,7 @@ import android.os.Handler;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Random;
 
 public class BallActivity extends AppCompatActivity {
@@ -31,13 +31,27 @@ public class BallActivity extends AppCompatActivity {
     {
         public double x,y,vx,vy;
         int r;
+        int type;//0:normal, 1:super, 2:punish
         public Asteroid(double xp, double yp)
         {
             x=xp;
             y=yp;
             vx=0;
             vy=10;
-            r=rnd.nextInt(10)+5;
+            r=rnd.nextInt(15)+5;
+            int rand=rnd.nextInt(10);
+            switch (rand)
+            {
+                case 0:
+                    type=1;
+                    break;
+                case 1:
+                    type=2;
+                    break;
+                 default:
+                     type=0;
+
+            }
         }
     }
     ArrayList<Asteroid> ast;
@@ -71,7 +85,7 @@ public class BallActivity extends AppCompatActivity {
         double R=50;
         int iScore=0;
         double time=20d;
-
+        Boolean bRun=true;
         public MyView(Context context) {
             super(context);
             paint = new Paint();
@@ -91,7 +105,7 @@ public class BallActivity extends AppCompatActivity {
                     }
                     time-=0.02;
                     if(time<=0)
-                        finish();
+                        bRun=false;
                     h.postDelayed(this, 20);
                 }
             }, 1000);
@@ -112,21 +126,24 @@ public class BallActivity extends AppCompatActivity {
         protected void onDraw(Canvas canvas) {
 
             super.onDraw(canvas);
-            vx-=ax/10.0;
-            vy+=ay/10.0;
-            xb+=vx;
-            yb+=vy;
-            if(xb<0)
-                vx=Math.abs(vx);
-            if(xb>getWidth())
-                vx=-Math.abs(vx);
-            if(yb<0)
-                vy=Math.abs(vy);
-            if(yb>getHeight())
-                vy=-Math.abs(vy);
+            if(bRun) {
+                vx -= ax / 10.0;
+                vy += ay / 10.0;
+                xb += vx;
+                yb += vy;
+                if (xb < 0)
+                    vx = Math.abs(vx);
+                if (xb > getWidth())
+                    vx = -Math.abs(vx);
+                if (yb < 0)
+                    vy = Math.abs(vy);
+                if (yb > getHeight())
+                    vy = -Math.abs(vy);
+            }
 
             paint.setStyle(Paint.Style.FILL);
-            paint.setColor(Color.WHITE);
+            int iCol=Math.min(255,(int)(time/10.0*255));
+            paint.setColor(Color.rgb(iCol,iCol,iCol));
             canvas.drawPaint(paint);
             // Use Color.parseColor to define HTML colors
             paint.setColor(Color.parseColor("#0000ff"));
@@ -136,8 +153,24 @@ public class BallActivity extends AppCompatActivity {
             paint.setColor(Color.parseColor("#ff0000"));
             for (Asteroid a: ast)
             {
-                a.x+=a.vx;
-                a.y+=a.vy;
+                if(bRun){
+                    a.x+=a.vx;
+                    a.y+=a.vy;
+                }
+                int c=0;
+                switch (a.type)
+                {
+                    case 0:
+                        c=Color.parseColor("#000000");
+                        break;
+                    case 1:
+                        c=Color.parseColor("#00ff00");
+                        break;
+                    case 2:
+                        c=Color.parseColor("#ff0000");
+                        break;
+                }
+                paint.setColor(c);
                 canvas.drawCircle((int)a.x,(int)a.y,a.r,paint);
             }
             int i=0;
@@ -146,7 +179,18 @@ public class BallActivity extends AppCompatActivity {
                 if(Math.sqrt(Math.pow(xb-ast.get(i).x,2)+Math.pow(yb-ast.get(i).y,2))<=(R+ast.get(i).r))
                 {
                     iScore++;
-                    time++;
+                    switch (ast.get(i).type)
+                    {
+                        case 0:
+                            time++;
+                            break;
+                        case 1:
+                            time+=3;
+                            break;
+                        case 2:
+                            time-=3;
+                            break;
+                    }
                     ast.remove(i);
                     return;
                 }
