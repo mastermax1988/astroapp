@@ -32,11 +32,11 @@ public class BallActivity extends AppCompatActivity {
         public double x,y,vx,vy;
         int r;
         int type;//0:normal, 1:super, 2:punish
-        public Asteroid(double xp, double yp)
+        public Asteroid(double xp, double yp, int score)
         {
             x=xp;
             y=yp;
-            vx=0;
+            vx=rnd.nextDouble()*4-2;
             vy=10;
             r=rnd.nextInt(15)+5;
             int rand=rnd.nextInt(10);
@@ -46,7 +46,7 @@ public class BallActivity extends AppCompatActivity {
                     type=1;
                     break;
                 case 1:
-                    type=2;
+                    type=score>10?2:1;
                     break;
                  default:
                      type=0;
@@ -104,13 +104,15 @@ public class BallActivity extends AppCompatActivity {
                     }
                     if(lastSpanw>nextSpawn)
                     {
-                        ast.add(new Asteroid(rnd.nextDouble()*getWidth(),0));
+                        ast.add(new Asteroid(rnd.nextDouble()*getWidth(),0,iScore));
                         lastSpanw=0;
                         nextSpawn=250+rnd.nextInt(500);
                     }
 
-                    if(time<=0)
-                        bRun=false;
+                    if(time<=0) {
+                        bRun = false;
+                        time = 0;
+                    }
                     h.postDelayed(this, 20);
                 }
             }, 1000);
@@ -160,7 +162,7 @@ public class BallActivity extends AppCompatActivity {
             {
                 if(bRun){
                     a.x+=a.vx;
-                    a.y+=a.vy;
+                    a.y+=a.vy+iScore/5.0;
                 }
                 int c=0;
                 switch (a.type)
