@@ -31,4 +31,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SynodicActivity.class);
         startActivity(intent);
     }
+
+    public void btnBallClick(View v)
+    {
+        Intent intent = new Intent(this, BallActivity.class);
+        startActivity(intent);
+    }
 }

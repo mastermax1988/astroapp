@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/sun_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BallActivity"></activity>
+        <activity android:name=".BallActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".HohmannActivity"
             android:configChanges="orientation|keyboardHidden"

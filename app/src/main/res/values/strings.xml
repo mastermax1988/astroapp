@@ -3,4 +3,5 @@
     <string name="btnEarthMoon">Simulation Erde Mond</string>
     <string name="btnHohmann">Flug Erde Mars</string>
     <string name="txtSynodic">Siderische und synodische Umlaufdauer</string>
+    <string name="btnBall">Ballspiel</string>
 </resources>
