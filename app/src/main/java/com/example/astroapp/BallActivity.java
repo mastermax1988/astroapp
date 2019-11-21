@@ -156,7 +156,7 @@ public class BallActivity extends AppCompatActivity {
             paint.setColor(Color.parseColor("#0000ff"));
             canvas.drawCircle((int)xb, (int)yb,(float)R, paint);
             paint.setTextSize(100f);
-            canvas.drawText("Score: " + iScore+"\nTime: "+Math.round(time*10)/10.0,100,100,paint );
+            canvas.drawText("Score: " + iScore+"   Time: "+Math.round(time*10)/10.0,100,100,paint );
             paint.setColor(Color.parseColor("#ff0000"));
             for (Asteroid a: ast)
             {
