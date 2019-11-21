@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".BallActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:keepScreenOn="true"></activity>
         <activity
             android:name=".HohmannActivity"
             android:configChanges="orientation|keyboardHidden"

@@ -86,6 +86,7 @@ public class BallActivity extends AppCompatActivity {
         int iScore=0;
         double time=20d;
         Boolean bRun=true;
+        double nextSpawn=500;
         public MyView(Context context) {
             super(context);
             paint = new Paint();
@@ -97,13 +98,17 @@ public class BallActivity extends AppCompatActivity {
                     // do stuff then
                     // can call h again after work!
                     BallActivity.MyView.this.invalidate();
-                    lastSpanw+=20;
-                    if(lastSpanw>500)
+                    if(bRun) {
+                        lastSpanw += 20;
+                        time -= 0.02;
+                    }
+                    if(lastSpanw>nextSpawn)
                     {
                         ast.add(new Asteroid(rnd.nextDouble()*getWidth(),0));
                         lastSpanw=0;
+                        nextSpawn=250+rnd.nextInt(500);
                     }
-                    time-=0.02;
+
                     if(time<=0)
                         bRun=false;
                     h.postDelayed(this, 20);
@@ -142,13 +147,13 @@ public class BallActivity extends AppCompatActivity {
             }
 
             paint.setStyle(Paint.Style.FILL);
-            int iCol=Math.min(255,(int)(time/10.0*255));
+            int iCol=Math.min(255,(int)(Math.abs(time)/10.0*255));
             paint.setColor(Color.rgb(iCol,iCol,iCol));
             canvas.drawPaint(paint);
             // Use Color.parseColor to define HTML colors
             paint.setColor(Color.parseColor("#0000ff"));
             canvas.drawCircle((int)xb, (int)yb,(float)R, paint);
-            paint.setTextSize(30f);
+            paint.setTextSize(100f);
             canvas.drawText("Score: " + iScore+"\nTime: "+Math.round(time*10)/10.0,100,100,paint );
             paint.setColor(Color.parseColor("#ff0000"));
             for (Asteroid a: ast)
