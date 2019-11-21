@@ -70,6 +70,7 @@ public class BallActivity extends AppCompatActivity {
         double vx,vy;
         double R=50;
         int iScore=0;
+        double time=20d;
 
         public MyView(Context context) {
             super(context);
@@ -83,12 +84,14 @@ public class BallActivity extends AppCompatActivity {
                     // can call h again after work!
                     BallActivity.MyView.this.invalidate();
                     lastSpanw+=20;
-                    if(lastSpanw>1000)
+                    if(lastSpanw>500)
                     {
                         ast.add(new Asteroid(rnd.nextDouble()*getWidth(),0));
                         lastSpanw=0;
                     }
-
+                    time-=0.02;
+                    if(time<=0)
+                        finish();
                     h.postDelayed(this, 20);
                 }
             }, 1000);
@@ -129,7 +132,7 @@ public class BallActivity extends AppCompatActivity {
             paint.setColor(Color.parseColor("#0000ff"));
             canvas.drawCircle((int)xb, (int)yb,(float)R, paint);
             paint.setTextSize(30f);
-            canvas.drawText("Score: " + iScore,100,100,paint );
+            canvas.drawText("Score: " + iScore+"\nTime: "+Math.round(time*10)/10.0,100,100,paint );
             paint.setColor(Color.parseColor("#ff0000"));
             for (Asteroid a: ast)
             {
@@ -140,6 +143,13 @@ public class BallActivity extends AppCompatActivity {
             int i=0;
             while(i<ast.size())
             {
+                if(Math.sqrt(Math.pow(xb-ast.get(i).x,2)+Math.pow(yb-ast.get(i).y,2))<=(R+ast.get(i).r))
+                {
+                    iScore++;
+                    time++;
+                    ast.remove(i);
+                    return;
+                }
                 if(ast.get(i).y>getHeight())
                     ast.remove(i);
                 else
