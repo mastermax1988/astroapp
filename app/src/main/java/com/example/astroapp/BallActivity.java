@@ -84,10 +84,14 @@ public class BallActivity extends AppCompatActivity {
             vy+=ay/10.0;
             xb+=vx;
             yb+=vy;
-            /*if(xb<0)
+            if(xb<0)
                 vx=Math.abs(vx);
             if(xb>getWidth())
-                vx=-Math.abs(vx);*/
+                vx=-Math.abs(vx);
+            if(yb<0)
+                vy=Math.abs(vy);
+            if(yb>getHeight())
+                vy=-Math.abs(vy);
 
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.WHITE);
