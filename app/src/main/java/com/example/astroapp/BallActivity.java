@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,12 +22,17 @@ import java.util.ArrayList;
 
 import java.util.Random;
 
+
+
+
 public class BallActivity extends AppCompatActivity {
 
 
     double ax,ay;
     Random rnd;
     int lastSpanw=0;
+
+
     public class Asteroid
     {
         public double x,y,vx,vy;
@@ -113,6 +119,15 @@ public class BallActivity extends AppCompatActivity {
                     if(time<=0) {
                         bRun = false;
                         time = 0;
+                        SharedPreferences sharedPref = BallActivity.this.getSharedPreferences("default",Context.MODE_PRIVATE);
+                        int highScore = sharedPref.getInt("highscore", 0);
+                        if(iScore>highScore)
+                        {
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putInt("highscore", iScore);
+                            editor.commit();
+                        }
+
                     }
                     h.postDelayed(this, 20);
                 }
