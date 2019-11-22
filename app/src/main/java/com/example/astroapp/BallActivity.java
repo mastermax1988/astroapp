@@ -2,13 +2,13 @@ package com.example.astroapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import android.graphics.Typeface;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -39,6 +39,7 @@ public class BallActivity extends AppCompatActivity {
             vx=rnd.nextDouble()*4-2;
             vy=10;
             r=rnd.nextInt(15)+5;
+            vy+=r/5.0;
             int rand=rnd.nextInt(10);
             switch (rand)
             {
